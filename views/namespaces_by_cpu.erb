@@ -18,13 +18,13 @@
         // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Namespaces');
-        data.addColumn('number', 'CPU requested');
-        data.addColumn('number', 'CPU used');
+        data.addColumn('number', 'CPU requested (millicores)');
+        data.addColumn('number', 'CPU used (millicores)');
         data.addRows(<%= values %>);
 
         // Set chart options
         var options = {
-          'title':'Namespaces by CPU (requested)',
+          'title':'Namespaces by CPU (requested vs. used)',
           'width':1500,
           'height':<%= values.count * 50 %>
         };
