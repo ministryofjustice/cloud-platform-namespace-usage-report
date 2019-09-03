@@ -20,3 +20,10 @@ get "/namespaces_by_cpu" do
 
   erb :namespaces_by_cpu, locals: { values: values }
 end
+
+get "/namespace/:name" do
+  namespaces = JSON.parse(File.read("data/namespace-report.json"))
+  data = namespaces["items"].find { |n| n["name"] == params[:name] }
+
+  erb :namespace, locals: { data: data }
+end
