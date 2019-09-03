@@ -19,6 +19,7 @@
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Namespaces');
         data.addColumn('number', 'CPU requested');
+        data.addColumn('number', 'CPU used');
         data.addRows(<%= values %>);
 
         // Set chart options

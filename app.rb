@@ -14,7 +14,7 @@ get "/namespaces_by_cpu" do
   namespaces = JSON.parse(File.read("data/namespace-report.json"))
 
   values = namespaces["items"]
-    .map { |n| [ n.fetch("name").to_s, n.dig("max_requests", "cpu").to_i ] }
+    .map { |n| [ n.fetch("name").to_s, n.dig("max_requests", "cpu").to_i, n.dig("resources_used", "cpu").to_i ] }
     .sort_by { |i| i[1] }
     .reverse
 
