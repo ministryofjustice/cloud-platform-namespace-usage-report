@@ -1,0 +1,3 @@
+* add a page for each namespace
+  * improve styling
+* link namespace graph to namespace page
