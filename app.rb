@@ -33,11 +33,7 @@ get "/" do
 end
 
 get "/namespaces_by_cpu" do
-  column_titles = [
-    "Namespaces",
-    "CPU requested (millicores)",
-    "CPU used (millicores)",
-  ]
+  column_titles = [ "Namespaces", "CPU requested (millicores)", "CPU used (millicores)" ]
 
   locals = namespaces_data("cpu").merge(
     column_titles: column_titles,
@@ -48,11 +44,7 @@ get "/namespaces_by_cpu" do
 end
 
 get "/namespaces_by_memory" do
-  column_titles = [
-    "Namespaces",
-    "Memory requested (mebibytes)",
-    "Memory used (mebibytes)",
-  ]
+  column_titles = [ "Namespaces", "Memory requested (mebibytes)", "Memory used (mebibytes)" ]
 
   locals = namespaces_data("memory").merge(
     column_titles: column_titles,
