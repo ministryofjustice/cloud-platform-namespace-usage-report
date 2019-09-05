@@ -14,7 +14,11 @@ def namespaces_data(order_by)
     .sort_by { |i| i[1] }
     .reverse
 
-  { values: values, last_updated: Time.now, type: order_by }
+  {
+    values: values,
+    last_updated: DateTime.parse(NAMESPACES["last_updated"]),
+    type: order_by,
+  }
 end
 
 def namespace(name)
