@@ -27,3 +27,13 @@ If the supplied API key matches the expected value, the locally stored JSON data
 If the API key doesn't match, the app. will return a 403 error.
 
 [namespace reporter]: https://github.com/ministryofjustice/cloud-platform-environments/blob/master/bin/namespace-reporter.rb
+
+## Running the report
+
+wget https://storage.googleapis.com/kubernetes-release/release/v1.14.6/bin/linux/amd64/kubectl
+export PATH=$PATH:.
+wget https://raw.githubusercontent.com/ministryofjustice/cloud-platform-environments/master/bin/namespace-reporter.rb
+
+$ kubectl -n namespace-usage-report create deployment ruby --image=bitnami/ruby
+
+

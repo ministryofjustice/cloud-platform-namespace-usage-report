@@ -1,3 +1,2 @@
-* add a page for each namespace
-  * improve styling
-* link namespace graph to namespace page
+* deploy into kubernetes cluster
+* set up cron job to post new data
