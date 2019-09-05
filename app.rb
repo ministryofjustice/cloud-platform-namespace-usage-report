@@ -28,6 +28,8 @@ def namespace(name)
   namespaces["items"].find { |n| n["name"] == params[:name] }
 end
 
+############################################################
+
 get "/" do
   redirect "/namespaces_by_cpu"
 end
