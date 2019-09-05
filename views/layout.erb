@@ -40,8 +40,8 @@
       <div class="is-navbar">
         <nav>
           <ul>
-            <li <%= %(class="is-active") if type == "cpu" %>><a href="/namespaces_by_cpu">CPU</a></li>
-            <li <%= %(class="is-active") if type == "memory" %>><a href="/namespaces_by_memory">Memory</a></li>
+            <li <%= %(class="is-active") if defined?(type) && type == "cpu" %>><a href="/namespaces_by_cpu">CPU</a></li>
+            <li <%= %(class="is-active") if defined?(type) && type == "memory" %>><a href="/namespaces_by_memory">Memory</a></li>
           </ul>
         </nav>
       </div>

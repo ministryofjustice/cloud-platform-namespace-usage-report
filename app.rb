@@ -63,5 +63,5 @@ get "/namespaces_by_memory" do
 end
 
 get "/namespace/:name" do
-  erb :namespace, locals: { type: "dummy", data: namespace(params[:name]) }
+  erb :namespace, locals: { data: namespace(params[:name]) }
 end
