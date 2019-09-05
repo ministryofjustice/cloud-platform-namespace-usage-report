@@ -10,4 +10,5 @@ build: .built-image
 run: build
 	docker run --rm \
 		-p 4567:4567 \
+		-e API_KEY=soopersekrit \
 		-it $(IMAGE)
