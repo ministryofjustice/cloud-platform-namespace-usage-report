@@ -6,23 +6,26 @@ require "sinatra"
 require "sinatra/reloader" if development?
 
 JSON_FILE = "data/namespace-report.json"
-NAMESPACES = JSON.parse(File.read(JSON_FILE))
+
+def namespaces
+  JSON.parse(File.read(JSON_FILE))
+end
 
 def namespaces_data(order_by)
-  values = NAMESPACES["items"]
+  values = namespaces["items"]
     .map { |n| [ n.fetch("name").to_s, n.dig("max_requests", order_by).to_i, n.dig("resources_used", order_by).to_i ] }
     .sort_by { |i| i[1] }
     .reverse
 
   {
     values: values,
-    last_updated: DateTime.parse(NAMESPACES["last_updated"]),
+    last_updated: DateTime.parse(namespaces["last_updated"]),
     type: order_by,
   }
 end
 
 def namespace(name)
-  NAMESPACES["items"].find { |n| n["name"] == params[:name] }
+  namespaces["items"].find { |n| n["name"] == params[:name] }
 end
 
 get "/" do
