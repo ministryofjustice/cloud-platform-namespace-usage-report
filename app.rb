@@ -18,7 +18,19 @@ get "/namespaces_by_cpu" do
     .sort_by { |i| i[1] }
     .reverse
 
-  erb :namespaces_by_cpu, locals: { values: values }
+  column_titles = [
+    "Namespaces",
+    "CPU requested (millicores)",
+    "CPU used (millicores)",
+  ]
+
+  locals = {
+    values: values,
+    column_titles: column_titles,
+    title: "Namespaces by CPU (requested vs. used)",
+  }
+
+  erb :namespaces_by_cpu, locals: locals
 end
 
 get "/namespace/:name" do
