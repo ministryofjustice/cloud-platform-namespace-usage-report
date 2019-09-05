@@ -7,7 +7,7 @@ require "sinatra/reloader" if development?
 
 
 get "/" do
-  erb :chart
+  redirect "/namespaces_by_cpu"
 end
 
 get "/namespaces_by_cpu" do
