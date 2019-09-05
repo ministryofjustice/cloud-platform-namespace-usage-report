@@ -33,6 +33,29 @@ get "/namespaces_by_cpu" do
   erb :namespaces_chart, locals: locals
 end
 
+get "/namespaces_by_memory" do
+  namespaces = JSON.parse(File.read("data/namespace-report.json"))
+
+  values = namespaces["items"]
+    .map { |n| [ n.fetch("name").to_s, n.dig("max_requests", "memory").to_i, n.dig("resources_used", "memory").to_i ] }
+    .sort_by { |i| i[1] }
+    .reverse
+
+  column_titles = [
+    "Namespaces",
+    "Memory requested (mebibytes)",
+    "Memory used (mebibytes)",
+  ]
+
+  locals = {
+    values: values,
+    column_titles: column_titles,
+    title: "Namespaces by Memory (requested vs. used)",
+  }
+
+  erb :namespaces_chart, locals: locals
+end
+
 get "/namespace/:name" do
   namespaces = JSON.parse(File.read("data/namespace-report.json"))
   data = namespaces["items"].find { |n| n["name"] == params[:name] }
