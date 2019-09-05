@@ -34,6 +34,7 @@ get "/namespaces_by_cpu" do
     values: ordered_data("cpu"),
     column_titles: column_titles,
     title: "Namespaces by CPU (requested vs. used)",
+    type: "cpu",
   }
 
   erb :namespaces_chart, locals: locals
@@ -50,6 +51,7 @@ get "/namespaces_by_memory" do
     values: ordered_data("memory"),
     column_titles: column_titles,
     title: "Namespaces by Memory (requested vs. used)",
+    type: "memory",
   }
 
   erb :namespaces_chart, locals: locals
