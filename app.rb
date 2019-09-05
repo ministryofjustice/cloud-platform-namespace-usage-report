@@ -30,7 +30,7 @@ get "/namespaces_by_cpu" do
     title: "Namespaces by CPU (requested vs. used)",
   }
 
-  erb :namespaces_by_cpu, locals: locals
+  erb :namespaces_chart, locals: locals
 end
 
 get "/namespace/:name" do
