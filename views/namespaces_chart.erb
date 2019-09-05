@@ -38,7 +38,8 @@
         var options = {
           'title':'<%= title %>',
           'width':1500,
-          'height':<%= values.count * 50 %>
+          'height':<%= values.count * 50 %>,
+          'chartArea': { 'top': 50 },
         };
 
         // Instantiate and draw our chart, passing in some options.
