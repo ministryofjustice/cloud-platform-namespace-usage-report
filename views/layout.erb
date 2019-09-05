@@ -17,9 +17,29 @@
       svg a.namespace-name:hover > text {
         fill: #0096dd;
       }
+
+      div.is-navbar-container {
+        min-height: 50px;
+      }
+
     </style>
   </head>
   <body>
+
+    <div class="is-navbar-container">
+      <div class="is-brand">
+        <b class="is-logo">Charts</b>
+      </div>
+      <div class="is-navbar">
+        <nav>
+          <ul>
+            <li><a href="/namespaces_by_cpu">CPU</a></li>
+            <li><a href="/namespaces_by_memory">Memory</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
     <div class="page is-container">
       <main class="main">
         <%= yield %>
