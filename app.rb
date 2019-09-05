@@ -15,6 +15,10 @@ def ordered_data(order_by)
     .reverse
 end
 
+def namespace(name)
+  NAMESPACES["items"].find { |n| n["name"] == params[:name] }
+end
+
 get "/" do
   redirect "/namespaces_by_cpu"
 end
@@ -52,8 +56,5 @@ get "/namespaces_by_memory" do
 end
 
 get "/namespace/:name" do
-  namespaces = JSON.parse(File.read("data/namespace-report.json"))
-  data = namespaces["items"].find { |n| n["name"] == params[:name] }
-
-  erb :namespace, locals: { data: data }
+  erb :namespace, locals: { data: namespace(params[:name]) }
 end
