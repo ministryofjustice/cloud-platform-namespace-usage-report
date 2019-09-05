@@ -57,3 +57,8 @@ end
 get "/namespace/:name" do
   erb :namespace, locals: { data: namespace(params[:name]) }
 end
+
+post "/update-data" do
+  payload = request.body.read
+  File.open(JSON_FILE, "w") {|f| f.puts(payload)}
+end
