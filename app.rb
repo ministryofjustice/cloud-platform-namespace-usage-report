@@ -43,6 +43,8 @@ get "/namespaces_by_cpu" do
   )
 
   erb :namespaces_chart, locals: locals
+rescue Errno::ENOENT
+  erb :no_data
 end
 
 get "/namespaces_by_memory" do
@@ -54,10 +56,14 @@ get "/namespaces_by_memory" do
   )
 
   erb :namespaces_chart, locals: locals
+rescue Errno::ENOENT
+  erb :no_data
 end
 
 get "/namespace/:name" do
   erb :namespace, locals: { data: namespace(params[:name]) }
+rescue Errno::ENOENT
+  erb :no_data
 end
 
 post "/update-data" do
