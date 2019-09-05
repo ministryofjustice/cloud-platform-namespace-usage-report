@@ -8,11 +8,13 @@ require "sinatra/reloader" if development?
 JSON_FILE = "data/namespace-report.json"
 NAMESPACES = JSON.parse(File.read(JSON_FILE))
 
-def ordered_data(order_by)
-  NAMESPACES["items"]
+def namespaces_data(order_by)
+  values = NAMESPACES["items"]
     .map { |n| [ n.fetch("name").to_s, n.dig("max_requests", order_by).to_i, n.dig("resources_used", order_by).to_i ] }
     .sort_by { |i| i[1] }
     .reverse
+
+  { values: values, last_updated: Time.now, type: order_by }
 end
 
 def namespace(name)
@@ -30,12 +32,10 @@ get "/namespaces_by_cpu" do
     "CPU used (millicores)",
   ]
 
-  locals = {
-    values: ordered_data("cpu"),
+  locals = namespaces_data("cpu").merge(
     column_titles: column_titles,
     title: "Namespaces by CPU (requested vs. used)",
-    type: "cpu",
-  }
+  )
 
   erb :namespaces_chart, locals: locals
 end
@@ -47,12 +47,10 @@ get "/namespaces_by_memory" do
     "Memory used (mebibytes)",
   ]
 
-  locals = {
-    values: ordered_data("memory"),
+  locals = namespaces_data("memory").merge(
     column_titles: column_titles,
     title: "Namespaces by Memory (requested vs. used)",
-    type: "memory",
-  }
+  )
 
   erb :namespaces_chart, locals: locals
 end

@@ -9,6 +9,11 @@
       svg a.namespace-name:hover > text {
         fill: #0096dd;
       }
+
+      .last_updated {
+        margin-top: 20px;
+      }
+
     </style>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -105,6 +110,7 @@
   </head>
 
   <body>
+    <p class="last_updated">Last updated: <%= last_updated.strftime("%Y-%m-%d %H:%M:%S") %></p>
     <!--Div that will hold the pie chart-->
     <div id="chart_div"></div>
   </body>
