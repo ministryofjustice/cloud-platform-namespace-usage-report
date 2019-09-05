@@ -5,19 +5,21 @@ require "json"
 require "sinatra"
 require "sinatra/reloader" if development?
 
+JSON_FILE = "data/namespace-report.json"
+NAMESPACES = JSON.parse(File.read(JSON_FILE))
+
+def ordered_data(order_by)
+  NAMESPACES["items"]
+    .map { |n| [ n.fetch("name").to_s, n.dig("max_requests", order_by).to_i, n.dig("resources_used", order_by).to_i ] }
+    .sort_by { |i| i[1] }
+    .reverse
+end
 
 get "/" do
   redirect "/namespaces_by_cpu"
 end
 
 get "/namespaces_by_cpu" do
-  namespaces = JSON.parse(File.read("data/namespace-report.json"))
-
-  values = namespaces["items"]
-    .map { |n| [ n.fetch("name").to_s, n.dig("max_requests", "cpu").to_i, n.dig("resources_used", "cpu").to_i ] }
-    .sort_by { |i| i[1] }
-    .reverse
-
   column_titles = [
     "Namespaces",
     "CPU requested (millicores)",
@@ -25,7 +27,7 @@ get "/namespaces_by_cpu" do
   ]
 
   locals = {
-    values: values,
+    values: ordered_data("cpu"),
     column_titles: column_titles,
     title: "Namespaces by CPU (requested vs. used)",
   }
@@ -34,13 +36,6 @@ get "/namespaces_by_cpu" do
 end
 
 get "/namespaces_by_memory" do
-  namespaces = JSON.parse(File.read("data/namespace-report.json"))
-
-  values = namespaces["items"]
-    .map { |n| [ n.fetch("name").to_s, n.dig("max_requests", "memory").to_i, n.dig("resources_used", "memory").to_i ] }
-    .sort_by { |i| i[1] }
-    .reverse
-
   column_titles = [
     "Namespaces",
     "Memory requested (mebibytes)",
@@ -48,7 +43,7 @@ get "/namespaces_by_memory" do
   ]
 
   locals = {
-    values: values,
+    values: ordered_data("memory"),
     column_titles: column_titles,
     title: "Namespaces by Memory (requested vs. used)",
   }
