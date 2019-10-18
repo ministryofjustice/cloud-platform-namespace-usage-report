@@ -21,11 +21,16 @@ def namespaces_data(order_by)
     values: values,
     last_updated: DateTime.parse(namespaces["last_updated"]),
     type: order_by,
+    total_requested: total_requested_by_all_namespaces(order_by), # order_by is cpu|memory
   }
 end
 
 def namespace(name)
   namespaces["items"].find { |n| n["name"] == params[:name] }
+end
+
+def total_requested_by_all_namespaces(property)
+  namespaces["items"].map { |ns| ns.dig("max_requests", property) }.map(&:to_i).sum
 end
 
 ############################################################
