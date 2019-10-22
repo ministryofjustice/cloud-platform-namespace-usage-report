@@ -13,7 +13,7 @@ end
 
 def namespaces_data(order_by)
   values = namespaces["items"]
-    .map { |n| [ n.fetch("name").to_s, n.dig("max_requests", order_by).to_i, n.dig("resources_used", order_by).to_i ] }
+    .map { |n| namespace_values(n, order_by) }
     .sort_by { |i| i[1] }
     .reverse
 
@@ -23,6 +23,14 @@ def namespaces_data(order_by)
     type: order_by,
     total_requested: total_requested_by_all_namespaces(order_by), # order_by is cpu|memory
   }
+end
+
+def namespace_values(namespace, order_by)
+  [
+    namespace.fetch("name").to_s,
+    namespace.dig("max_requests", order_by).to_i,
+    namespace.dig("resources_used", order_by).to_i
+  ]
 end
 
 def namespace(name)
