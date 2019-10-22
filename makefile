@@ -12,3 +12,10 @@ run: build
 		-p 4567:4567 \
 		-e API_KEY=soopersekrit \
 		-it $(IMAGE)
+
+# Ensure you have a data/namespace-report.json file
+# NB: you will have to restart this process when you
+# change files. Most changes will not be picked up by
+# just reloading the web page.
+dev-server:
+	./app.rb -o 0.0.0.0
