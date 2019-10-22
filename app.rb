@@ -29,7 +29,8 @@ def namespace_values(namespace, order_by)
   [
     namespace.fetch("name").to_s,
     namespace.dig("max_requests", order_by).to_i,
-    namespace.dig("resources_used", order_by).to_i
+    namespace.dig("resources_requested", order_by).to_i,
+    namespace.dig("resources_used", order_by).to_i,
   ]
 end
 
@@ -48,7 +49,7 @@ get "/" do
 end
 
 get "/namespaces_by_cpu" do
-  column_titles = [ "Namespaces", "CPU requested (millicores)", "CPU used (millicores)" ]
+  column_titles = [ "Namespaces", "Namespace CPU request (millicores)", "Total pod requests (millicores)", "CPU used (millicores)" ]
 
   locals = namespaces_data("cpu").merge(
     column_titles: column_titles,
@@ -61,7 +62,7 @@ rescue Errno::ENOENT
 end
 
 get "/namespaces_by_memory" do
-  column_titles = [ "Namespaces", "Memory requested (mebibytes)", "Memory used (mebibytes)" ]
+  column_titles = [ "Namespaces", "Namespace memory request (mebibytes)", "Total pods requests (mebibytes)", "Memory used (mebibytes)" ]
 
   locals = namespaces_data("memory").merge(
     column_titles: column_titles,
