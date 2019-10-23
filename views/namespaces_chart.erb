@@ -37,6 +37,7 @@
         data.addColumn('string', '<%= column_titles[0] %>');
         data.addColumn('number', '<%= column_titles[1] %>');
         data.addColumn('number', '<%= column_titles[2] %>');
+        data.addColumn('number', '<%= column_titles[3] %>');
         data.addRows(<%= values %>);
 
         // Set chart options
@@ -45,6 +46,7 @@
           'width':1500,
           'height':<%= values.count * 50 %>,
           'chartArea': { 'top': 50 },
+          'colors': ['blue', 'orange', 'red']
         };
 
         // Instantiate and draw our chart, passing in some options.

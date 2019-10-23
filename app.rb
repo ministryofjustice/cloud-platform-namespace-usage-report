@@ -13,7 +13,7 @@ end
 
 def namespaces_data(order_by)
   values = namespaces["items"]
-    .map { |n| [ n.fetch("name").to_s, n.dig("max_requests", order_by).to_i, n.dig("resources_used", order_by).to_i ] }
+    .map { |n| namespace_values(n, order_by) }
     .sort_by { |i| i[1] }
     .reverse
 
@@ -23,6 +23,15 @@ def namespaces_data(order_by)
     type: order_by,
     total_requested: total_requested_by_all_namespaces(order_by), # order_by is cpu|memory
   }
+end
+
+def namespace_values(namespace, order_by)
+  [
+    namespace.fetch("name").to_s,
+    namespace.dig("max_requests", order_by).to_i,
+    namespace.dig("resources_requested", order_by).to_i,
+    namespace.dig("resources_used", order_by).to_i,
+  ]
 end
 
 def namespace(name)
@@ -40,7 +49,7 @@ get "/" do
 end
 
 get "/namespaces_by_cpu" do
-  column_titles = [ "Namespaces", "CPU requested (millicores)", "CPU used (millicores)" ]
+  column_titles = [ "Namespaces", "Namespace CPU request (millicores)", "Total pod requests (millicores)", "CPU used (millicores)" ]
 
   locals = namespaces_data("cpu").merge(
     column_titles: column_titles,
@@ -53,7 +62,7 @@ rescue Errno::ENOENT
 end
 
 get "/namespaces_by_memory" do
-  column_titles = [ "Namespaces", "Memory requested (mebibytes)", "Memory used (mebibytes)" ]
+  column_titles = [ "Namespaces", "Namespace memory request (mebibytes)", "Total pods requests (mebibytes)", "Memory used (mebibytes)" ]
 
   locals = namespaces_data("memory").merge(
     column_titles: column_titles,
