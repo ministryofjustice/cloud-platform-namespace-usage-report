@@ -3,7 +3,11 @@
 require "bundler/setup"
 require "json"
 require "sinatra"
-require "sinatra/reloader" if development?
+
+if development?
+  require "sinatra/reloader"
+  require "pry-byebug"
+end
 
 JSON_FILE = "data/namespace-report.json"
 
@@ -25,12 +29,34 @@ def namespaces_data(order_by)
   }
 end
 
+def namespaces_pods_data
+  values = namespaces["items"]
+    .map { |n| namespace_pods_values(n) }
+    .sort_by { |i| i[1] }
+    .reverse
+
+  {
+    values: values,
+    last_updated: DateTime.parse(namespaces["last_updated"]),
+    type: "pods",
+    total_requested: 0,
+  }
+end
+
 def namespace_values(namespace, order_by)
   [
     namespace.fetch("name").to_s,
     namespace.dig("max_requests", order_by).to_i,
     namespace.dig("resources_requested", order_by).to_i,
     namespace.dig("resources_used", order_by).to_i,
+  ]
+end
+
+def namespace_pods_values(namespace)
+  [
+    namespace.fetch("name").to_s,
+    namespace.dig("hard_limit", "pods").to_i,
+    namespace.dig("resources_used", "pods").to_i,
   ]
 end
 
@@ -67,6 +93,19 @@ get "/namespaces_by_memory" do
   locals = namespaces_data("memory").merge(
     column_titles: column_titles,
     title: "Namespaces by Memory (requested vs. used)",
+  )
+
+  erb :namespaces_chart, locals: locals
+rescue Errno::ENOENT
+  erb :no_data
+end
+
+get "/namespaces_by_pods" do
+  column_titles = [ "Namespaces", "Pods limit", "Pods running" ]
+
+  locals = namespaces_pods_data.merge(
+    column_titles: column_titles,
+    title: "Namespaces by pods (limit vs. running)",
   )
 
   erb :namespaces_chart, locals: locals

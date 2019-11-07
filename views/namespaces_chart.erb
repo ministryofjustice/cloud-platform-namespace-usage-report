@@ -35,9 +35,9 @@
         // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', '<%= column_titles[0] %>');
-        data.addColumn('number', '<%= column_titles[1] %>');
-        data.addColumn('number', '<%= column_titles[2] %>');
-        data.addColumn('number', '<%= column_titles[3] %>');
+        <% column_titles[1..].each do |title| %>
+          data.addColumn('number', '<%= title %>');
+        <% end %>
         data.addRows(<%= values %>);
 
         // Set chart options

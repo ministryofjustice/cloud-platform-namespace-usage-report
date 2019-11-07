@@ -8,7 +8,7 @@ WORKDIR /app
 RUN gem install bundler
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN bundle install --without development
 
 COPY app.rb ./
 COPY public/ ./public
