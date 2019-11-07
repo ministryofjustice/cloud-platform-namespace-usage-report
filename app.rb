@@ -3,7 +3,11 @@
 require "bundler/setup"
 require "json"
 require "sinatra"
-require "sinatra/reloader" if development?
+
+if development?
+  require "sinatra/reloader"
+  require "pry-byebug"
+end
 
 JSON_FILE = "data/namespace-report.json"
 
