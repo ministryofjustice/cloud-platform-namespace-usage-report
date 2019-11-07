@@ -56,7 +56,7 @@ def namespace_pods_values(namespace)
   [
     namespace.fetch("name").to_s,
     namespace.dig("hard_limit", "pods").to_i,
-    namespace.dig("hard_limit_used", "pods").to_i
+    namespace.dig("resources_used", "pods").to_i,
   ]
 end
 
