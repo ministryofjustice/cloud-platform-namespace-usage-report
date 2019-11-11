@@ -1,4 +1,4 @@
-IMAGE := ministryofjustice/cloud-platform-namespace-usage-report:1.6
+IMAGE := ministryofjustice/cloud-platform-namespace-usage-report:1.7
 
 build: .built-image
 
