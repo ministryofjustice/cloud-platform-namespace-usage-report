@@ -35,11 +35,13 @@ def namespaces_pods_data
     .sort_by { |i| i[1] }
     .reverse
 
+  total_pods = namespaces["items"].sum { |n| n.dig("resources_used", "pods") }
+
   {
     values: values,
     last_updated: DateTime.parse(namespaces["last_updated"]),
     type: "pods",
-    total_requested: 0,
+    total_requested: total_pods,
   }
 end
 
