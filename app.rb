@@ -67,7 +67,7 @@ def namespace(name)
 end
 
 def total_requested_by_all_namespaces(property)
-  namespaces["items"].map { |ns| ns.dig("max_requests", property) }.map(&:to_i).sum
+  namespaces["items"].map { |ns| ns.dig("resources_requested", property) }.map(&:to_i).sum
 end
 
 ############################################################
