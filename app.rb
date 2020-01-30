@@ -4,6 +4,8 @@ require "bundler/setup"
 require "json"
 require "sinatra"
 
+Rack::Utils.key_space_limit = 262144
+
 if development?
   require "sinatra/reloader"
   require "pry-byebug"
