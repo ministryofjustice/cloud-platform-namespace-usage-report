@@ -1,10 +1,13 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: usage-report
   namespace: namespace-usage-report
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: usage-report-app
   template:
     metadata:
       labels:
