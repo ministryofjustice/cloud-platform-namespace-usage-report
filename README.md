@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This report is now served by [how out of date are we](https://github.com/ministryofjustice/cloud-platform-how-out-of-date-are-we)
+
 # Cloud Platform Namespace Usage Report
 
 Use the JSON output of the [namespace reporter] to create charts (using [Google charts]) showing namespace resource usage.
